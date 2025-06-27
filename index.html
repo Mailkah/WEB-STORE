@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital & Game Service Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --ml-primary: #FF5722;
+            --ml-primary-dark: #E64A19;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            --neon-blue: #0ea5e9;
+            --neon-pink: #ec4899;
+            --neon-purple: #a855f7;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Neon Glow */
+        .neon-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .neon-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .neon-circle:nth-child(1) {
+            background: var(--neon-blue);
+            width: 500px;
+            height: 500px;
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+
+        .neon-circle:nth-child(2) {
+            background: var(--neon-pink);
+            width: 600px;
+            height: 600px;
+            bottom: -150px;
+            right: -100px;
+            animation-delay: 3s;
+        }
+
+        .neon-circle:nth-child(3) {
+            background: var(--neon-purple);
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            right: 50px;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            background-color: rgba(15, 23, 42, 0.7);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-link {
+            padding: 0.75rem 1.5rem;
+            margin: 0 0.5rem;
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .nav-link:hover::before {
+            left: 100%;
+        }
+        
+        .nav-link.active {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+        }
+        
+        .nav-link.ml {
+            background-color: var(--ml-primary);
+            color: white;
+            box-shadow: 0 0 10px var(--ml-primary), 0 0 20px var(--ml-primary);
+        }
+        
+        .nav-link:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .header-content {
+            background: linear-gradient(135deg, rgba(18, 140, 126, 0.8) 0%, rgba(37, 211, 102, 0.8) 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            color: white;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .ml-header {
+            background: linear-gradient(135deg, rgba(230, 74, 25, 0.8) 0%, rgba(255, 87, 34, 0.8) 100%);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Products */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .product {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .ml-badge {
+            background-color: var(--ml-primary);
+            box-shadow: 0 0 10px var(--ml-primary);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--light);
+            font-weight: 600;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .price {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .price-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+        
+        .price-amount {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+        
+        .ml-price {
+            color: var(--ml-primary);
+        }
+        
+        .buy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px var(--primary);
+        }
+        
+        .buy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .buy-btn:hover::before {
+            left: 100%;
+        }
+        
+        .ml-btn {
+            background-color: var(--ml-primary);
+            box-shadow: 0 0 10px var(--ml-primary);
+        }
+        
+        .buy-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+        }
+        
+        .ml-btn:hover {
+            background-color: var(--ml-primary-dark);
+            box-shadow: 0 0 15px var(--ml-primary), 0 0 30px var(--ml-primary);
+        }
+        
+        .buy-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(15, 23, 42, 0.7);
+            color: white;
+            border-radius: 1rem;
+            margin-top: 3rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .contact-btn:hover::before {
+            left: 100%;
+        }
+        
+        .ml-contact {
+            background-color: var(--ml-primary);
+            box-shadow: 0 0 10px var(--ml-primary);
+        }
+        
+        .contact-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--primary), 0 0 30px var(--primary);
+        }
+        
+        .ml-contact:hover {
+            background-color: var(--ml-primary-dark);
+            box-shadow: 0 0 15px var(--ml-primary), 0 0 30px var(--ml-primary);
+        }
+        
+        .contact-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        /* Page Sections */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* ML Specific Styles */
+        .rank-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.75rem;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+        }
+        
+        .rank-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .rank-name {
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                flex-wrap: wrap;
+            }
+            
+            .nav-link {
+                margin: 0.25rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Neon Background Circles -->
+    <div class="neon-bg">
+        <div class="neon-circle"></div>
+        <div class="neon-circle"></div>
+        <div class="neon-circle"></div>
+    </div>
+
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <a href="#" class="nav-link active" data-page="digital">Layanan Digital</a>
+            <a href="#" class="nav-link ml" data-page="ml">Joki Mobile Legends</a>
+        </nav>
+        
+        <!-- Digital Services Page -->
+        <div id="digital-page" class="page active">
+            <header>
+                <div class="header-content">
+                    <h1>Digital Service Store</h1>
+                    <p class="subtitle">Solusi digital profesional untuk kebutuhan Anda</p>
+                </div>
+            </header>
+            
+            <div class="products">
+                <!-- Produk 1 -->
+                <div class="product">
+                    <div class="product-badge">Hot</div>
+                    <div class="product-info">
+                        <h3 class="product-title">JASA BUG NOMOR</h3>
+                        <p class="product-description">Layanan bug nomor premium untuk berbagai keperluan dengan hasil maksimal</p>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Mulai dari</span>
+                                <span class="price-amount">Rp 1K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Harga tertinggi</span>
+                                <span class="price-amount">Rp 3K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20JASA%20BUG%20NOMOR%20dengan%20harga%20Rp%201K-3K" class="buy-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Produk 2 -->
+                <div class="product">
+                    <div class="product-badge">Best Seller</div>
+                    <div class="product-info">
+                        <h3 class="product-title">PANEL PETRDOCYL</h3>
+                        <p class="product-description">Panel lengkap dengan fitur-fitur unggulan dan akses 24/7</p>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Mulai dari</span>
+                                <span class="price-amount">Rp 1K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Harga tertinggi</span>
+                                <span class="price-amount">Rp 10K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20PANEL%20PETRDOCYL%20dengan%20harga%20Rp%201K-10K" class="buy-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Produk 3 -->
+                <div class="product">
+                    <div class="product-info">
+                        <h3 class="product-title">BOT JAGA GRUB</h3>
+                        <p class="product-description">Bot otomatis canggih untuk menjaga grup Anda 24 jam non-stop</p>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Mulai dari</span>
+                                <span class="price-amount">Rp 3K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Harga tertinggi</span>
+                                <span class="price-amount">Rp 5K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20BOT%20JAGA%20GRUB%20dengan%20harga%20Rp%203K-5K" class="buy-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Produk 4 -->
+                <div class="product">
+                    <div class="product-info">
+                        <h3 class="product-title">BOT BUG WHATSAPP</h3>
+                        <p class="product-description">Solusi otomatis untuk kebutuhan bug WhatsApp dengan fitur lengkap</p>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Mulai dari</span>
+                                <span class="price-amount">Rp 3K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Harga tertinggi</span>
+                                <span class="price-amount">Rp 5K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20BOT%20BUG%20WHATSAPP%20dengan%20harga%20Rp%203K-5K" class="buy-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Produk 5 -->
+                <div class="product">
+                    <div class="product-badge">New</div>
+                    <div class="product-info">
+                        <h3 class="product-title">MURID BUG WHATSAPP</h3>
+                        <p class="product-description">Pelatihan lengkap menjadi ahli bug WhatsApp dengan mentor berpengalaman</p>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Mulai dari</span>
+                                <span class="price-amount">Rp 5K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Harga tertinggi</span>
+                                <span class="price-amount">Rp 10K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20MURID%20BUG%20WHATSAPP%20dengan%20harga%20Rp%205K-10K" class="buy-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                <h3>Butuh bantuan atau informasi lebih lanjut?</h3>
+                <p>Tim kami siap membantu Anda 24/7</p>
+                <a href="https://wa.me/62895605985577" class="contact-btn">
+                    <i class="fab fa-whatsapp"></i> Hubungi Kami via WhatsApp
+                </a>
+            </footer>
+        </div>
+        
+        <!-- Mobile Legends Boosting Page -->
+        <div id="ml-page" class="page">
+            <header>
+                <div class="header-content ml-header">
+                    <h1>Joki Mobile Legends</h1>
+                    <p class="subtitle">Naik rank dengan cepat dan aman bersama joki profesional kami</p>
+                </div>
+            </header>
+            
+            <div class="products">
+                <!-- Paket 1 -->
+                <div class="product">
+                    <div class="product-badge ml-badge">Popular</div>
+                    <div class="product-info">
+                        <div class="rank-info">
+                            <img src="https://img.icons8.com/color/48/000000/medal2.png" class="rank-icon" alt="Warrior">
+                            <div>
+                                <h3 class="product-title">Warrior ke Elite</h3>
+                                <p class="product-description">Paket naik rank untuk pemula</p>
+                            </div>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Per Star</span>
+                                <span class="price-amount ml-price">Rp 2K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Paket 10 Star</span>
+                                <span class="price-amount ml-price">Rp 18K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20joki%20ML%20Warrior%20ke%20Elite" class="buy-btn ml-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Joki
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Paket 2 -->
+                <div class="product">
+                    <div class="product-info">
+                        <div class="rank-info">
+                            <img src="https://img.icons8.com/color/48/000000/medal2.png" class="rank-icon" alt="Elite">
+                            <div>
+                                <h3 class="product-title">Elite ke Master</h3>
+                                <p class="product-description">Paket naik rank menengah</p>
+                            </div>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Per Star</span>
+                                <span class="price-amount ml-price">Rp 3K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Paket 10 Star</span>
+                                <span class="price-amount ml-price">Rp 27K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20joki%20ML%20Elite%20ke%20Master" class="buy-btn ml-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Joki
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Paket 3 -->
+                <div class="product">
+                    <div class="product-badge ml-badge">Best Value</div>
+                    <div class="product-info">
+                        <div class="rank-info">
+                            <img src="https://img.icons8.com/color/48/000000/trophy.png" class="rank-icon" alt="Master">
+                            <div>
+                                <h3 class="product-title">Master ke Epic</h3>
+                                <p class="product-description">Paket naik rank untuk pemain serius</p>
+                            </div>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Per Star</span>
+                                <span class="price-amount ml-price">Rp 4K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Paket 10 Star</span>
+                                <span class="price-amount ml-price">Rp 36K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20joki%20ML%20Master%20ke%20Epic" class="buy-btn ml-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Joki
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Paket 4 -->
+                <div class="product">
+                    <div class="product-info">
+                        <div class="rank-info">
+                            <img src="https://img.icons8.com/color/48/000000/trophy.png" class="rank-icon" alt="Epic">
+                            <div>
+                                <h3 class="product-title">Epic ke Legend</h3>
+                                <p class="product-description">Paket naik rank untuk pemain advance</p>
+                            </div>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Per Star</span>
+                                <span class="price-amount ml-price">Rp 5K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Paket 10 Star</span>
+                                <span class="price-amount ml-price">Rp 45K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20joki%20ML%20Epic%20ke%20Legend" class="buy-btn ml-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Joki
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Paket 5 -->
+                <div class="product">
+                    <div class="product-badge ml-badge">Pro</div>
+                    <div class="product-info">
+                        <div class="rank-info">
+                            <img src="https://img.icons8.com/color/48/000000/prize.png" class="rank-icon" alt="Legend">
+                            <div>
+                                <h3 class="product-title">Legend ke Mythic</h3>
+                                <p class="product-description">Paket naik rank profesional</p>
+                            </div>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Per Star</span>
+                                <span class="price-amount ml-price">Rp 7K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Paket 10 Star</span>
+                                <span class="price-amount ml-price">Rp 63K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20joki%20ML%20Legend%20ke%20Mythic" class="buy-btn ml-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Joki
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Paket 6 -->
+                <div class="product">
+                    <div class="product-info">
+                        <div class="rank-info">
+                            <img src="https://img.icons8.com/color/48/000000/prize.png" class="rank-icon" alt="Mythic">
+                            <div>
+                                <h3 class="product-title">Mythic Glory</h3>
+                                <p class="product-description">Paket untuk mencapai tier tertinggi</p>
+                            </div>
+                        </div>
+                        
+                        <div class="price-range">
+                            <div class="price">
+                                <span class="price-label">Per Star</span>
+                                <span class="price-amount ml-price">Rp 10K</span>
+                            </div>
+                            <div class="price">
+                                <span class="price-label">Paket 10 Star</span>
+                                <span class="price-amount ml-price">Rp 90K</span>
+                            </div>
+                        </div>
+                        
+                        <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20joki%20ML%20Mythic%20Glory" class="buy-btn ml-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan Joki
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                <h3>Butuh bantuan untuk memilih paket joki?</h3>
+                <p>Konsultasikan kebutuhan rank Anda dengan tim kami</p>
+                <a href="https://wa.me/62895605985577" class="contact-btn ml-contact">
+                    <i class="fab fa-whatsapp"></i> Konsultasi via WhatsApp
+                </a>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Navigation between pages
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+                    document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding page
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(`${pageId}-page`).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
