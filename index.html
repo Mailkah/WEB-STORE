@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Store BY KING MAEL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #25D366;
+            --primary-dark: #128C7E;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .header-content {
+            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+            padding: 2rem;
+            border-radius: 1rem;
+            color: white;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .header-content::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -30px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .product {
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .price-range {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+        }
+        
+        .price {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .price-label {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+        
+        .price-amount {
+            font-weight: 700;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+        
+        .buy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .buy-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .buy-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--dark);
+            color: white;
+            border-radius: 1rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .contact-btn i {
+            margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .products {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Digital Store BY KING MAEL</h1>
+                <p class="subtitle">Solusi digital profesional untuk kebutuhan Anda</p>
+            </div>
+        </header>
+        
+        <div class="products">
+            <!-- Produk 1 -->
+            <div class="product">
+                <div class="product-badge">Hot</div>
+                <div class="product-info">
+                    <h3 class="product-title">JASA BUG NOMOR</h3>
+                    <p class="product-description">Layanan bug nomor premium untuk berbagai keperluan dengan hasil maksimal</p>
+                    
+                    <div class="price-range">
+                        <div class="price">
+                            <span class="price-label">Mulai dari</span>
+                            <span class="price-amount">Rp 1K</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-label">Harga tertinggi</span>
+                            <span class="price-amount">Rp 3K</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20JASA%20BUG%20NOMOR%20dengan%20harga%20Rp%201K-3K" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Produk 2 -->
+            <div class="product">
+                <div class="product-badge">Best Seller</div>
+                <div class="product-info">
+                    <h3 class="product-title">PANEL PETRDOCYL</h3>
+                    <p class="product-description">Panel lengkap dengan fitur-fitur unggulan dan akses 24/7</p>
+                    
+                    <div class="price-range">
+                        <div class="price">
+                            <span class="price-label">Mulai dari</span>
+                            <span class="price-amount">Rp 1K</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-label">Harga tertinggi</span>
+                            <span class="price-amount">Rp 10K</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20PANEL%20PETRDOCYL%20dengan%20harga%20Rp%201K-10K" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Produk 3 -->
+            <div class="product">
+                <div class="product-info">
+                    <h3 class="product-title">BOT JAGA GRUB</h3>
+                    <p class="product-description">Bot otomatis canggih untuk menjaga grup Anda 24 jam non-stop</p>
+                    
+                    <div class="price-range">
+                        <div class="price">
+                            <span class="price-label">Mulai dari</span>
+                            <span class="price-amount">Rp 3K</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-label">Harga tertinggi</span>
+                            <span class="price-amount">Rp 5K</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20BOT%20JAGA%20GRUB%20dengan%20harga%20Rp%203K-5K" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Produk 4 -->
+            <div class="product">
+                <div class="product-info">
+                    <h3 class="product-title">BOT BUG WHATSAPP</h3>
+                    <p class="product-description">Solusi otomatis untuk kebutuhan bug WhatsApp dengan fitur lengkap</p>
+                    
+                    <div class="price-range">
+                        <div class="price">
+                            <span class="price-label">Mulai dari</span>
+                            <span class="price-amount">Rp 3K</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-label">Harga tertinggi</span>
+                            <span class="price-amount">Rp 5K</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20BOT%20BUG%20WHATSAPP%20dengan%20harga%20Rp%203K-5K" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Produk 5 -->
+            <div class="product">
+                <div class="product-badge">New</div>
+                <div class="product-info">
+                    <h3 class="product-title">MURID BUG WHATSAPP</h3>
+                    <p class="product-description">Pelatihan lengkap menjadi ahli bug WhatsApp dengan mentor berpengalaman</p>
+                    
+                    <div class="price-range">
+                        <div class="price">
+                            <span class="price-label">Mulai dari</span>
+                            <span class="price-amount">Rp 5K</span>
+                        </div>
+                        <div class="price">
+                            <span class="price-label">Harga tertinggi</span>
+                            <span class="price-amount">Rp 10K</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://wa.me/62895605985577?text=Saya%20tertarik%20membeli%20MURID%20BUG%20WHATSAPP%20dengan%20harga%20Rp%205K-10K" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <h3>Butuh bantuan atau informasi lebih lanjut?</h3>
+            <p>Tim kami siap membantu Anda 24/7</p>
+            <a href="https://wa.me/62895605985577" class="contact-btn">
+                <i class="fab fa-whatsapp"></i> Hubungi Kami via WhatsApp
+            </a>
+        </footer>
+    </div>
+</body>
+  </html>
